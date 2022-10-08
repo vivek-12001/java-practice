@@ -158,9 +158,9 @@ public class JavaStreams {
 
         // Get distinct people by id
         List<Item> distinctElements = items1.stream()
-                .filter(distinctByKeys(Item::getQty, Item::getPerson))
+                .filter(distinctByCustomFields(Item::getPrice))
                 .collect(Collectors.toList());
-        System.out.println(distinctElements);
+        System.out.println("distinctElements = " + distinctElements);
 
         Stream<Integer> s1 = Stream.concat(Stream.of(5,6,7), Stream.of(1,2,3,4));
         s1.forEach(System.out::println);
@@ -256,6 +256,11 @@ public class JavaStreams {
                     .collect(Collectors.toList());
             return seen.putIfAbsent(keys, Boolean.TRUE) == null;
         };
+    }
+
+    public static <T> Predicate<T> distinctByCustomFields(Function<T, Object> function) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(function.apply(t));
     }
 
 }
