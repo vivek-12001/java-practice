@@ -7,23 +7,28 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 
 @Slf4j
 public class EncryptFile {
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchProviderException {
 
         File file = new File("src/main/resources/file/newFile.txt");
 
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-        String checksum = getFileChecksum(messageDigest, file);
+        String salt = getRandomSalt();
+        String checksum = getFileChecksum(messageDigest, salt, file);
 
-        log.info("checksum created using SHA-256 algo of file {} is {}", file.getAbsolutePath(), checksum);
+        log.info("checksum created using SHA-256 algo of file {}, added salt is {} is {}", file.getAbsolutePath(), salt, checksum);
     }
 
-    private static String getFileChecksum(MessageDigest messageDigest, File file) {
+    private static String getFileChecksum(MessageDigest messageDigest, String salt,File file) {
 
         StringBuilder stringBuilder = new StringBuilder();
+
+        messageDigest.update(salt.getBytes());
 
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             byte[] byteArrayToReadDataInChunks = new byte[1024];
@@ -44,6 +49,13 @@ public class EncryptFile {
         }
 
         return stringBuilder.toString();
+    }
+
+    public static String getRandomSalt() throws NoSuchAlgorithmException, NoSuchProviderException {
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        byte[] bytes = new byte[16];
+        secureRandom.nextBytes(bytes);
+        return bytes.toString();
     }
 
 }
