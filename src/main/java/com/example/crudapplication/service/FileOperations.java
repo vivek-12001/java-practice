@@ -9,6 +9,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -231,6 +232,36 @@ public class FileOperations {
         log.info("File Filtering...");
         File[] files = srcDir.listFiles(txtFileFilter);
         Arrays.stream(files).forEach(System.out::println);
+
+        // reading from 3 files and writing into 1 file
+        try {
+            log.info("Reading from 3 diff files and writing into 1 file");
+            String[] inputFiles = {
+                    "src/main/resources/file/a.txt",
+                    "src/main/resources/file/b.txt",
+                    "src/main/resources/file/c.txt"
+            };
+            String outputFile = "src/main/resources/file/d.txt";
+
+            FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+            WritableByteChannel writableByteChannel = fileOutputStream.getChannel();
+
+            for (int i=0;i<inputFiles.length;i++) {
+                FileInputStream fileInputStream = new FileInputStream(inputFiles[i]);
+                FileChannel fileChannel = fileInputStream.getChannel();
+
+                fileChannel.transferTo(0, fileChannel.size(), writableByteChannel);
+
+                fileChannel.close();
+                fileInputStream.close();
+            }
+
+            writableByteChannel.close();
+            fileOutputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
