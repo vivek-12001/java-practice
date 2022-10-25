@@ -10,6 +10,7 @@
         <module>observer-patterns</module>
         <module>state-patterns</module>
         <module>adapter-patterns</module>
+        <module>vending-machine</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
