@@ -11,7 +11,10 @@
         <module>state-patterns</module>
         <module>adapter-patterns</module>
         <module>vending-machine</module>
-    </modules>
+        <module>ticket-booking-lld</module>
+        <module>factory-patterns</module>
+		<module>splitwise-lld</module>
+	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
