@@ -14,6 +14,7 @@
         <module>ticket-booking-lld</module>
         <module>factory-patterns</module>
 		<module>splitwise-lld</module>
+		<module>atm-lld</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
