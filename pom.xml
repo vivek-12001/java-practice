@@ -15,7 +15,9 @@
         <module>factory-patterns</module>
 		<module>splitwise-lld</module>
 		<module>atm-lld</module>
-	</modules>
+		<module>threading</module>
+        <module>logger-lld</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
