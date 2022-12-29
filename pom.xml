@@ -18,6 +18,7 @@
 		<module>threading</module>
         <module>logger-lld</module>
         <module>springboot-best-practices</module>
+        <module>load-balancer-implementation</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
