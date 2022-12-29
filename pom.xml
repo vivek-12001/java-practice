@@ -17,6 +17,7 @@
 		<module>atm-lld</module>
 		<module>threading</module>
         <module>logger-lld</module>
+        <module>springboot-best-practices</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
